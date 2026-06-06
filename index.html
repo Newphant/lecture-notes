@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>讲义仓库 — NewPhant</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --ink: #191919; --ink-s: #6b6b6b; --ink-t: #999;
+    --bg: #fff; --bg-warm: #f5f2ee; --bg-deep: #ece7e0;
+    --accent: #d4a574; --accent2: #cc785c;
+    --border: #e5e5e5; --border-l: #f0f0f0;
+    --radius: 14px;
+    --font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+    --font-d: 'Sohne', 'Inter', -apple-system, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font); color: var(--ink); background: var(--bg); line-height: 1.6; font-size: 16px; }
+  a { color: inherit; text-decoration: none; }
+
+  /* NAV */
+  .nav { position: sticky; top: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border-l); height: 60px; display: flex; align-items: center; }
+  .nav-inner { max-width: 1100px; width: 100%; margin: 0 auto; padding: 0 32px; display: flex; align-items: center; justify-content: space-between; }
+  .nav-logo { font-weight: 600; font-size: 17px; letter-spacing: -0.02em; }
+  .nav-links { display: flex; gap: 24px; }
+  .nav-links a { font-size: 14px; color: var(--ink-s); transition: color 0.15s; }
+  .nav-links a:hover { color: var(--ink); }
+
+  /* HERO */
+  .hero { padding: 80px 32px 60px; text-align: center; position: relative; }
+  .hero::before { content: ''; position: absolute; top: -160px; left: 50%; transform: translateX(-50%); width: 700px; height: 700px; background: radial-gradient(circle, rgba(212,165,116,0.10) 0%, transparent 65%); pointer-events: none; }
+  .hero-inner { position: relative; z-index: 1; max-width: 680px; margin: 0 auto; }
+  .hero h1 { font-family: var(--font-d); font-size: clamp(32px, 5vw, 52px); font-weight: 600; letter-spacing: -0.035em; line-height: 1.1; margin-bottom: 18px; }
+  .hero p { font-size: 17px; color: var(--ink-s); max-width: 480px; margin: 0 auto; }
+  .hero-stats { display: flex; gap: 40px; justify-content: center; margin-top: 36px; flex-wrap: wrap; }
+  .hero-stat-val { font-size: 26px; font-weight: 600; font-family: var(--font-d); letter-spacing: -0.02em; }
+  .hero-stat-lbl { font-size: 12px; color: var(--ink-t); margin-top: 2px; }
+
+  /* GRID */
+  .grid-section { max-width: 1100px; margin: 0 auto; padding: 40px 32px 80px; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+  .card { background: var(--bg); border: 1px solid var(--border-l); border-radius: var(--radius); overflow: hidden; transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s; cursor: pointer; }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.06); border-color: var(--border); }
+  .card-cover { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 48px; position: relative; overflow: hidden; }
+  .card-cover span { position: relative; z-index: 1; font-family: var(--font-d); font-weight: 600; }
+  .card-body { padding: 24px; }
+  .card-tag { font-size: 12px; font-weight: 500; color: var(--accent); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .card-tag .dot { width: 6px; height: 6px; border-radius: 50%; }
+  .card-body h3 { font-family: var(--font-d); font-size: 18px; font-weight: 600; letter-spacing: -0.01em; margin-bottom: 8px; }
+  .card-body p { font-size: 14px; color: var(--ink-s); line-height: 1.65; }
+  .card-meta { display: flex; gap: 20px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border-l); }
+  .card-meta div { text-align: center; }
+  .card-meta .val { font-size: 17px; font-weight: 600; font-family: var(--font-d); }
+  .card-meta .lbl { font-size: 11px; color: var(--ink-t); }
+  .card-arrow { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 14px; font-weight: 500; color: var(--accent); transition: gap 0.2s; }
+  .card:hover .card-arrow { gap: 10px; }
+
+  /* FOOTER */
+  .footer { background: var(--bg-warm); padding: 48px 32px; border-top: 1px solid var(--border); text-align: center; }
+  .footer p { font-size: 14px; color: var(--ink-s); }
+  .footer a { color: var(--accent); font-weight: 500; }
+
+  /* REVEAL */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.6s, transform 0.6s; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">📚 讲义仓库</a>
+    <div class="nav-links">
+      <a href="https://newphant.github.io/NewPhant/">← 返回简历</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-inner reveal">
+    <h1>讲义仓库</h1>
+    <p>Agent 驱动的学术知识生产。人写内容，Agent 负责编排、校对、审校。</p>
+    <div class="hero-stats">
+      <div><div class="hero-stat-val">1,476+</div><div class="hero-stat-lbl">总页数</div></div>
+      <div><div class="hero-stat-val">5</div><div class="hero-stat-lbl">学科方向</div></div>
+      <div><div class="hero-stat-val">117+</div><div class="hero-stat-lbl">总章数</div></div>
+      <div><div class="hero-stat-val">300+</div><div class="hero-stat-lbl">社群传播</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="grid-section">
+  <div class="cards">
+
+    <!-- 数学分析 -->
+    <div class="card reveal" onclick="window.open('pdfs/math-analysis.pdf')">
+      <div class="card-cover" style="background: linear-gradient(135deg, #f5f2ee, #ece7e0);">
+        <span style="color: var(--ink); opacity: 0.15; font-size: 72px;">f(x)</span>
+      </div>
+      <div class="card-body">
+        <div class="card-tag"><span class="dot" style="background: var(--accent);"></span> 数学 · 已完成</div>
+        <h3>数学分析基础讲义</h3>
+        <p>教材体例，ElegantBook 排版，公理化推导为主，每个公式有来历、有目的。经多轮 Agent 审校。</p>
+        <div class="card-meta">
+          <div><div class="val">41</div><div class="lbl">章</div></div>
+          <div><div class="val">583</div><div class="lbl">页</div></div>
+          <div><div class="val">2.1M</div><div class="lbl">PDF</div></div>
+        </div>
+        <div class="card-arrow">在线阅读 <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div>
+
+    <!-- 普通物理学 -->
+    <div class="card reveal" onclick="window.open('pdfs/physics.pdf')">
+      <div class="card-cover" style="background: linear-gradient(135deg, #e8f0e8, #d4e4d4);">
+        <span style="color: var(--ink); opacity: 0.12; font-size: 72px;">E=mc²</span>
+      </div>
+      <div class="card-body">
+        <div class="card-tag"><span class="dot" style="background: #4ade80;"></span> 物理 · 已完成</div>
+        <h3>普通物理学基础讲义</h3>
+        <p>经典力学·热学·电磁学·光学·原子物理。公理化推导风格，叙事驱动，例题后置，用 Agent 重构传统教材编写流程。</p>
+        <div class="card-meta">
+          <div><div class="val">76</div><div class="lbl">章</div></div>
+          <div><div class="val">893</div><div class="lbl">页</div></div>
+          <div><div class="val">2.8M</div><div class="lbl">PDF</div></div>
+        </div>
+        <div class="card-arrow">在线阅读 <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div>
+
+    <!-- 高等代数 -->
+    <div class="card reveal" onclick="window.open('pdfs/algebra.pdf')">
+      <div class="card-cover" style="background: linear-gradient(135deg, #e8e4f0, #d4d0e4);">
+        <span style="color: var(--ink); opacity: 0.12; font-size: 72px;">det(A)</span>
+      </div>
+      <div class="card-body">
+        <div class="card-tag"><span class="dot" style="background: #a78bfa;"></span> 代数 · 进行中</div>
+        <h3>高等代数讲义</h3>
+        <p>融合高等代数与抽象代数，高于邱维声水平，以推导为主，加入高观点内容，Agent 辅助编排。</p>
+        <div class="card-meta">
+          <div><div class="val">进行中</div><div class="lbl">状态</div></div>
+          <div><div class="val">2.2M</div><div class="lbl">PDF</div></div>
+        </div>
+        <div class="card-arrow">在线阅读 <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div>
+
+    <!-- 量子力学 -->
+    <div class="card reveal" onclick="window.open('pdfs/quantum.pdf')">
+      <div class="card-cover" style="background: linear-gradient(135deg, #e4ecf5, #d0dced);">
+        <span style="color: var(--ink); opacity: 0.12; font-size: 72px;">ψ⟩</span>
+      </div>
+      <div class="card-body">
+        <div class="card-tag"><span class="dot" style="background: #60a5fa;"></span> 物理 · 进行中</div>
+        <h3>量子力学讲义</h3>
+        <p>延续数学分析讲义的风格：重推导、叙事驱动，参考 Sakurai 等经典教材，Agent 辅助全篇编排与审校。</p>
+        <div class="card-meta">
+          <div><div class="val">进行中</div><div class="lbl">状态</div></div>
+          <div><div class="val">1.8M</div><div class="lbl">PDF</div></div>
+        </div>
+        <div class="card-arrow">在线阅读 <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div>
+
+    <!-- Agent 讲义 -->
+    <div class="card reveal" onclick="window.open('pdfs/agent.pdf')">
+      <div class="card-cover" style="background: linear-gradient(135deg, #191919, #333);">
+        <span style="color: #fff; opacity: 0.15; font-size: 72px;">Agent</span>
+      </div>
+      <div class="card-body">
+        <div class="card-tag"><span class="dot" style="background: var(--accent2);"></span> AI · 进行中</div>
+        <h3>Agent 智能体讲义</h3>
+        <p>从零搭建私人订制化 Agent，覆盖 LangChain、八大 Agent 架构等，实践驱动的智能体开发指南。</p>
+        <div class="card-meta">
+          <div><div class="val">进行中</div><div class="lbl">状态</div></div>
+          <div><div class="val">1.2M</div><div class="lbl">PDF</div></div>
+        </div>
+        <div class="card-arrow">在线阅读 <svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer class="footer">
+  <p>与南京大学物理系、南京信息工程大学人工智能系学生合作 · 全程由 <strong>NSC 智能科研 Agent</strong> 辅助撰写</p>
+  <p style="margin-top: 8px; font-size: 13px; color: var(--ink-t);">&copy; 2026 NewPhant · <a href="https://newphant.github.io/NewPhant/">返回简历</a></p>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
